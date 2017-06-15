@@ -1,0 +1,51 @@
+object(stdClass) #39 (14) { ["@attributes"]= > object(stdClass) #38 (1) { ["Id"]= > string(4)
+"nfse"
+}["Numero"] => string(15)
+"201700000001903" ["CodigoVerificacao"] => string(8)
+"64266942" ["DataEmissao"] => string(19)
+"2017-06-07T09:52:05" ["NaturezaOperacao"] => string(1)
+"1" ["RegimeEspecialTributacao"] => string(1)
+"6" ["OptanteSimplesNacional"] => string(1)
+"1" ["IncentivadorCultural"] => string(1)
+"2" ["Competencia"] => string(19)
+"2017-06-06T00:00:00" ["NfseSubstituida"] => string(15)
+"201700000001900" ["Servico"] => object(stdClass) #41 (5) { ["Valores"]= > object(stdClass) #40 (4) { ["ValorServicos"]= > string(5)
+"78.00" ["IssRetido"] => string(1)
+"2" ["BaseCalculo"] => string(5)
+"78.00" ["ValorLiquidoNfse"] => string(5)
+"78.00"
+}["ItemListaServico"] => string(4)
+"5.08" ["CodigoTributacaoMunicipio"] => string(8)
+"50800200" ["Discriminacao"] => string(34)
+"1 banho e tosa higienica e retoque" ["CodigoMunicipio"] => string(7)
+"4314902"
+}["PrestadorServico"] => object(stdClass) #43 (3) { ["IdentificacaoPrestador"]= > object(stdClass) #42 (2) { ["Cnpj"]= > string(14)
+"22209521000196" ["InscricaoMunicipal"] => string(8)
+"27787923"
+}["RazaoSocial"] => string(26)
+"GURIAS PET SHOP LTDA - EPP" ["Endereco"] => object(stdClass) #44 (6) { ["Endereco"]= > string(21)
+"R MARQUES DO POMBAL" ["Numero"] => string(3)
+"861" ["Bairro"] => string(11)
+"AUXILIADORA" ["CodigoMunicipio"] => string(7)
+"4314902" ["Uf"] => string(2)
+"RS" ["Cep"] => string(8)
+"90540001"
+}
+}["TomadorServico"] => object(stdClass) #47 (3) { ["IdentificacaoTomador"]= > object(stdClass) #46 (1) { ["CpfCnpj"]= > object(stdClass) #45 (1) { ["Cpf"]= > string(11)
+"57997691715"
+}
+}["RazaoSocial"] => string(15)
+"Adelaide Tinoco" ["Endereco"] => object(stdClass) #48 (7) { ["Endereco"]= > string(20)
+"R. Marques do Pombal" ["Numero"] => string(3)
+"799" ["Complemento"] => string(4)
+"1004" ["Bairro"] => string(16)
+"Moinhos de Vento" ["CodigoMunicipio"] => string(7)
+"4314902" ["Uf"] => string(2)
+"RS" ["Cep"] => string(8)
+"90540001"
+}
+}["OrgaoGerador"] => object(stdClass) #49 (2) { ["CodigoMunicipio"]= > string(7)
+"4314902" ["Uf"] => string(2)
+"RS"
+}
+}
