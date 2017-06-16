@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 16-Jun-2017 às 05:00
+-- Generation Time: 17-Jun-2017 às 00:48
 -- Versão do servidor: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -29,12 +29,13 @@ SET time_zone = "+00:00";
 CREATE TABLE `endereco` (
   `id_endereco` int(11) NOT NULL,
   `Endereco` varchar(50) DEFAULT NULL,
+  `Complemento` varchar(50) DEFAULT NULL,
   `Numero` varchar(50) DEFAULT NULL,
   `Bairro` varchar(50) DEFAULT NULL,
   `CodigoMunicipio` varchar(50) DEFAULT NULL,
   `Uf` varchar(50) DEFAULT NULL,
   `Cep` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -53,7 +54,7 @@ CREATE TABLE `Nfse` (
   `IncentivadorCultural` varchar(50) DEFAULT NULL,
   `Competencia` varchar(50) DEFAULT NULL,
   `NfseSubstituida` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -76,8 +77,9 @@ CREATE TABLE `Nfse_OrgaoGerador` (
 CREATE TABLE `Nfse_PrestadorServico` (
   `id_nfse` int(11) DEFAULT NULL,
   `id_prestador` int(11) NOT NULL,
+  `id_endereco` int(11) NOT NULL,
   `RazaoSocial` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -92,7 +94,7 @@ CREATE TABLE `Nfse_Servico` (
   `CodigoTributacaoMunicipio` varchar(50) DEFAULT NULL,
   `Discriminacao` varchar(50) DEFAULT NULL,
   `CodigoMunicipio` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -103,8 +105,9 @@ CREATE TABLE `Nfse_Servico` (
 CREATE TABLE `Nfse_TomadorServico` (
   `id_nfse` int(11) DEFAULT NULL,
   `id_tomador_servico` int(11) NOT NULL,
+  `id_endereco` int(11) NOT NULL,
   `RazaoSocial` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -172,22 +175,57 @@ ALTER TABLE `Nfse`
   ADD PRIMARY KEY (`id_nfse`);
 
 --
+-- Indexes for table `Nfse_OrgaoGerador`
+--
+ALTER TABLE `Nfse_OrgaoGerador`
+  ADD KEY `id_nfse` (`id_nfse`);
+
+--
 -- Indexes for table `Nfse_PrestadorServico`
 --
 ALTER TABLE `Nfse_PrestadorServico`
-  ADD PRIMARY KEY (`id_prestador`);
+  ADD PRIMARY KEY (`id_prestador`),
+  ADD KEY `nfse` (`id_nfse`),
+  ADD KEY `endereco` (`id_endereco`);
 
 --
 -- Indexes for table `Nfse_Servico`
 --
 ALTER TABLE `Nfse_Servico`
-  ADD PRIMARY KEY (`id_servico`);
+  ADD PRIMARY KEY (`id_servico`),
+  ADD KEY `nfse_servico` (`id_nfse`);
 
 --
 -- Indexes for table `Nfse_TomadorServico`
 --
 ALTER TABLE `Nfse_TomadorServico`
-  ADD PRIMARY KEY (`id_tomador_servico`);
+  ADD PRIMARY KEY (`id_tomador_servico`),
+  ADD KEY `nfse_tomador` (`id_nfse`),
+  ADD KEY `endereco_tomador` (`id_endereco`);
+
+--
+-- Indexes for table `PrestadorServico_IdentificacaoPrestador`
+--
+ALTER TABLE `PrestadorServico_IdentificacaoPrestador`
+  ADD KEY `identificacao_prestador` (`id_prestador`);
+
+--
+-- Indexes for table `Servico_Valores`
+--
+ALTER TABLE `Servico_Valores`
+  ADD KEY `servico` (`id_servico`);
+
+--
+-- Indexes for table `TomadorServico_Contato`
+--
+ALTER TABLE `TomadorServico_Contato`
+  ADD KEY `tomador_contato` (`id_tomador_servico`);
+
+--
+-- Indexes for table `TomadorServico_IdentificacaoTomador`
+--
+ALTER TABLE `TomadorServico_IdentificacaoTomador`
+  ADD KEY `tomador_identificacao` (`id_tomador_servico`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -218,6 +256,60 @@ ALTER TABLE `Nfse_Servico`
 --
 ALTER TABLE `Nfse_TomadorServico`
   MODIFY `id_tomador_servico` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `Nfse_OrgaoGerador`
+--
+ALTER TABLE `Nfse_OrgaoGerador`
+  ADD CONSTRAINT `id_nfse` FOREIGN KEY (`id_nfse`) REFERENCES `Nfse` (`id_nfse`);
+
+--
+-- Limitadores para a tabela `Nfse_PrestadorServico`
+--
+ALTER TABLE `Nfse_PrestadorServico`
+  ADD CONSTRAINT `endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`),
+  ADD CONSTRAINT `nfse` FOREIGN KEY (`id_nfse`) REFERENCES `Nfse` (`id_nfse`);
+
+--
+-- Limitadores para a tabela `Nfse_Servico`
+--
+ALTER TABLE `Nfse_Servico`
+  ADD CONSTRAINT `nfse_servico` FOREIGN KEY (`id_nfse`) REFERENCES `Nfse` (`id_nfse`);
+
+--
+-- Limitadores para a tabela `Nfse_TomadorServico`
+--
+ALTER TABLE `Nfse_TomadorServico`
+  ADD CONSTRAINT `endereco_tomador` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id_endereco`),
+  ADD CONSTRAINT `nfse_tomador` FOREIGN KEY (`id_nfse`) REFERENCES `Nfse` (`id_nfse`);
+
+--
+-- Limitadores para a tabela `PrestadorServico_IdentificacaoPrestador`
+--
+ALTER TABLE `PrestadorServico_IdentificacaoPrestador`
+  ADD CONSTRAINT `identificacao_prestador` FOREIGN KEY (`id_prestador`) REFERENCES `Nfse_PrestadorServico` (`id_prestador`);
+
+--
+-- Limitadores para a tabela `Servico_Valores`
+--
+ALTER TABLE `Servico_Valores`
+  ADD CONSTRAINT `servico` FOREIGN KEY (`id_servico`) REFERENCES `Nfse_Servico` (`id_servico`);
+
+--
+-- Limitadores para a tabela `TomadorServico_Contato`
+--
+ALTER TABLE `TomadorServico_Contato`
+  ADD CONSTRAINT `tomador_contato` FOREIGN KEY (`id_tomador_servico`) REFERENCES `Nfse_TomadorServico` (`id_tomador_servico`);
+
+--
+-- Limitadores para a tabela `TomadorServico_IdentificacaoTomador`
+--
+ALTER TABLE `TomadorServico_IdentificacaoTomador`
+  ADD CONSTRAINT `tomador_identificacao` FOREIGN KEY (`id_tomador_servico`) REFERENCES `Nfse_TomadorServico` (`id_tomador_servico`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

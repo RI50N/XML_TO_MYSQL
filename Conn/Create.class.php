@@ -2,7 +2,7 @@
 /**
  * <b>Create.class:</b>
  * Classe responsável por cadastros genéticos no banco de dados!
- * 
+ *
  * @copyright (c) 2016, Adriano Boese
  */
 
@@ -21,7 +21,7 @@ class Create extends Conn {
     /**
      * <b>ExeCreate:</b> Executa um cadastro simplificado no banco.
      * Basta informar o nome da tabela e um array atribuitivo com nome da coluna e valor
-     * 
+     *
      * @param STRING $Tabela = Informe o nome da tabela no banco!
      * @param ARRAY $Dados = Informe um array atribuitivo. ( Nome Da Coluna => Valor ).
      */
@@ -34,7 +34,7 @@ class Create extends Conn {
     }
 
     /**
-     * <b>Obter resultado:</b> Retorna o ID do registro inserido ou FALSE caso nem um registro seja inserido! 
+     * <b>Obter resultado:</b> Retorna o ID do registro inserido ou FALSE caso nem um registro seja inserido!
      * @return INT $Variavel = lastInsertId OR FALSE
      */
     public function getResult() {
